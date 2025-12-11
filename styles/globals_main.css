@@ -1,3 +1,4 @@
+/*@import "../node_modules/tailwindcss/dist/lib.d.mts";*/
 @import "tailwindcss";
 
 :root {
@@ -17,6 +18,10 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+.side-link {
+    @apply block rounded-md px-3 py-2 text-sm hover:bg-gray-700 text-gray-200 transition;
 }
 
 body {

@@ -1,15 +1,28 @@
-import type { Metadata } from "next";
-import "../styles/globals_main.css";
+import { Outfit } from "next/font/google";
 
-export const metadata: Metadata = {
-    title: "My App",
+import { SidebarProvider } from "../components/context/SidebarContext";
+import { ThemeProvider } from "../components/context/ThemeContext";
+import "../styles/globals.css";
+
+const outfit = Outfit({
+    subsets: ["latin"],
+});
+
+export const metadata = {
+    title: "Dashboard",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+                                       children,
+                                   }: {
+    children: React.ReactNode;
+}) {
     return (
         <html lang="en">
-        <body>
-        {children}
+        <body className={`${outfit.className} dark:bg-gray-900`}>
+        <ThemeProvider>
+            <SidebarProvider>{children}</SidebarProvider>
+        </ThemeProvider>
         </body>
         </html>
     );

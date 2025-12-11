@@ -9,8 +9,11 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@svgr/webpack": "^8.1.0",
+    "apexcharts": "^5.3.6",
     "next": "16.0.8",
     "react": "19.2.1",
+    "react-apexcharts": "^1.9.0",
     "react-dom": "19.2.1"
   },
   "devDependencies": {

@@ -1,32 +1,40 @@
 "use client";
 
-import React, { useState } from "react";
+
+import { useSidebar } from "../../components/context/SidebarContext";
 import AppHeader from "@/components/layout/AppHeader";
 import AppSidebar from "@/components/layout/AppSidebar";
 import Backdrop from "@/components/layout/Backdrop";
+import React from "react";
 
-export default function DashboardLayout({
-                                            children,
-                                        }: {
-    children: React.ReactNode;
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
 }) {
-    const [isOpen, setIsOpen] = useState(false);
+  const { isExpanded, isHovered, isMobileOpen } = useSidebar();
 
-    return (
-        <div className="min-h-screen flex bg-gray-100">
+  // Dynamic class for main content margin based on sidebar state
+  const mainContentMargin = isMobileOpen
+    ? "ml-0"
+    : isExpanded || isHovered
+    ? "lg:ml-[290px]"
+    : "lg:ml-[90px]";
 
-            {/* Sidebar */}
-            <AppSidebar isOpen={isOpen} onClose={() => setIsOpen(false)} />
-
-            {/* Backdrop (Mobile only) */}
-            <Backdrop isOpen={isOpen} onClose={() => setIsOpen(false)} />
-
-            {/* Main Area */}
-            <div className="flex-1 flex flex-col">
-                <AppHeader onMenuClick={() => setIsOpen(true)} />
-
-                <main className="flex-1 p-4 md:p-6">{children}</main>
-            </div>
-        </div>
-    );
+  return (
+    <div className="min-h-screen xl:flex">
+      {/* Sidebar and Backdrop */}
+      <AppSidebar />
+      <Backdrop />
+      {/* Main Content Area */}
+      <div
+        className={`flex-1 transition-all  duration-300 ease-in-out ${mainContentMargin}`}
+      >
+        {/* Header */}
+        <AppHeader />
+        {/* Page Content */}
+        <div className="p-4 mx-auto max-w-(--breakpoint-2xl) md:p-6">{children}</div>
+      </div>
+    </div>
+  );
 }

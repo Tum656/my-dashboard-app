@@ -1,6 +1,6 @@
 "use client";
 import React, {useEffect, useState} from "react";
-
+import { roundToTickSET, isValidPrice } from "@/lib/utils";
 import {ApexOptions} from "apexcharts";
 
 import dynamic from "next/dynamic";
@@ -9,24 +9,8 @@ const ReactApexChart = dynamic(() => import("react-apexcharts"), {
     ssr: false,
 });
 
-function roundToTickSET(price: number): number {
-    let tick = 0.01;
-
-    if (price >= 2 && price < 5) tick = 0.02;
-    else if (price < 10) tick = 0.05;
-    else if (price < 25) tick = 0.1;
-    else tick = 0.25;
-
-    const factor = 1 / tick;
-    return Math.round(price * factor) / factor;
-}
-
-function isValidPrice(price: number | null | undefined): price is number {
-    return price !== null && price !== undefined && price > 0;
-}
-
 export default function LineChartOne() {
-    const [series, setSeries] = useState<ApexAxisChartSeries>([]);
+    const [seriesData, setSeries] = useState<ApexAxisChartSeries>([]);
     const [categories, setCategories] = useState<string[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -171,17 +155,7 @@ export default function LineChartOne() {
             },
         },
     };
-
-    // const series = [
-    //   {
-    //     name: "Sales",
-    //     data: [180, 190, 170, 160, 175, 165, 170, 205, 230, 210, 240, 235],
-    //   },
-    //   {
-    //     name: "Revenue",
-    //     data: [40, 30, 50, 40, 55, 40, 70, 100, 110, 120, 150, 140],
-    //   },
-    // ];
+    const series =seriesData;
     return (
         <div className="max-w-full overflow-x-auto custom-scrollbar">
             <div id="chartEight" className="min-w-[1000px]">

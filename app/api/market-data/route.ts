@@ -41,9 +41,11 @@ export async function POST(req: Request) {
         const regularMarketPrice = data.chart.result[0].meta.regularMarketPrice;
         const timestamp_series = data.chart.result[0].timestamp;
         graph.timestamp = timestamp_series;
+        const previousClose=data.chart.result[0].meta.previousClose;
 
         return NextResponse.json({
             symbol,
+            previousClose,
             interval,
             range,
             regularMarketPrice,

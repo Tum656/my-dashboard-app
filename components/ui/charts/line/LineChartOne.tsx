@@ -20,6 +20,10 @@ export default function LineChartOne({
                                                       loading,
                                                       error,
                                                   }: Props) {
+    const prev =
+        typeof prevClose === "number" && Number.isFinite(prevClose)
+            ? prevClose
+            : undefined;
     const options: ApexOptions = {
         legend: {
             show: false, // Hide legend
@@ -93,6 +97,7 @@ export default function LineChartOne({
             },
         },
         yaxis: {
+            min: prev,
             labels: {
                 style: {
                     fontSize: "12px", // Adjust font size for y-axis labels
